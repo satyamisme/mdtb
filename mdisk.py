@@ -13,9 +13,10 @@ dirName = os.path.basename(dirPath)
 ytdlp = dirPath + "/binaries/yt-dlp"
 aria2c = dirPath + "/binaries/aria2c"
 ffmpeg = dirPath + "/ffmpeg/ffmpeg"
+ffprobe = dirPath + "/ffmpeg/ffprobe"
 
 # changing permission
-os.system(f"chmod 777 {ytdlp} {aria2c} {ffmpeg} ffmpeg/ffprobe ffmpeg/qt-faststart")
+os.system(f"chmod 777 {ytdlp} {aria2c} {ffmpeg} {ffprobe} ffmpeg/qt-faststart")
 
 # header for request
 header = {
@@ -85,9 +86,10 @@ def mdow(link,message):
     print("Video Downloaded")
     # renaming
     output = requests.get(url=URL, headers=header).json()['filename']
-    filename = output
+    filename = output[:1000]
     output = output.replace(".mkv", "").replace(".mp4", "")
     output = "".join( x for x in output if (x.isalnum() or x in "._-@ "))
+    output = output[:200]
 
     # check if normal video
     if len(audids) == 0:
@@ -169,3 +171,4 @@ def getsize(link):
         return size
     except:
         return 0
+
